@@ -1,11 +1,13 @@
 from os import remove
 
+from src.infraestructure.FormatterDict import FormatterDict
+
 from .repo import Repo
 from ..infraestructure.ControllerFileHandler import FileHandler
 from ..domain.room import Room
 
 class RepoFile(Repo):
-    def _initialize(self, config = None):
+    def _configuration(self, config = None):
         try: self.file = config['file']
         except: self.file = None
 
@@ -17,19 +19,27 @@ class RepoFile(Repo):
     def file(self, value):
         self._file = value
 
-    def write(self, data):
+    def _write(self, domain = None, data = None):
+        # Leemos el valor actual
+        current, _ = FileHandler.read(self.file)
+
+        # Compactamos data con su dominio y concatenamos con el valor actual
+        data = {domain: data}
+        data = FormatterDict.concatenate_dictionaries(current, data)
+
+        # Escribimos el nuevo valor
         FileHandler.write(self.file, data)
 
-    def read(self, domain = None):
+    def _read(self, domain = None):
         ret_val, _ = FileHandler.read(self.file)
 
-        if isinstance(domain, str): ret_val = ret_val[domain]
         try:
+            if isinstance(domain, str): ret_val = ret_val[domain]
             ret_val = [Room.from_dict(i) for i in ret_val]
         except:
             ret_val = None
 
         return ret_val
     
-    def initialize(self):
-        FileHandler.delete(self.file)
+    def _initialize(self, domain):
+        FileHandler.delete(self.file, domain)

@@ -19,7 +19,8 @@ class FileHandler:
             cls._write_json(file, data)
 
     @classmethod
-    def delete(cls, file):
+    def delete(cls, file, domain = None):
+        # Habría que borrar sólamente el dominio que se le pasa
         if path.exists(file):
             remove(file)
 

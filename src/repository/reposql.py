@@ -1,50 +1,38 @@
 from .repo import Repo
 from ..infraestructure.ControllerMySql import ControllerMySql
-
+from ..adapters.AdapterMySql import AdapterMySql
 from ..domain.room import Room
 
 class RepoSql(Repo):
-    def _initialize(self, config = None):
-        try: self.db = config['db']
-        except: self.db = None
+    def _configuration(self, config = None):
+        try: self.ddbb_config = config['ddbb_config']
+        except: self.ddbb_config = None
 
     @property
-    def db(self):
-        return self._db
+    def ddbb_config(self):
+        return self._ddbb_config
 
-    @db.setter
-    def db(self, value):
-        self._db = value
+    @ddbb_config.setter
+    def ddbb_config(self, value):
+        self._ddbb_config = value
 
-    def write(self, data):
-        ControllerMySql.write(self.db, data)
+    def _write(self, domain = None, data = None):
+        data = {domain: data}
+        ControllerMySql.write(self.ddbb_config, data)
 
-    def read(self, domain = None):
+    def _read(self, domain = None):
         ret_val = None
 
-        if domain is not None:
-            data = ControllerMySql.read(self.db, domain)
-            data = self._adapt_domains(data)
+        if isinstance(domain, str): #########!!!!!
+            data = ControllerMySql.read(self.ddbb_config, domain)
+            data = AdapterMySql.adapt_domain_from_sql(data)
 
             ret_val = [Room.from_dict(i) for i in data]
         
         return ret_val
     
-    def initialize(self, domain = None):
-        db_config = self.db
-        ControllerMySql.initialize(db_config, domain)
-
-    def _adapt_domains(self, data):
-        ret_val = list()
-
-        for code, size, price, longitude, latitude in zip(data['code'], data['size'], data['price'], data['longitude'], data['latitude']):
-            domain = {
-                'code': code,
-                'size': size,
-                'price': price,
-                'longitude': longitude,
-                'latitude': latitude,
-            }
-            ret_val.append(domain)
-
+    def _initialize(self, domain = None):
+        ddbb_config = self.ddbb_config
+        ret_val = ControllerMySql.initialize(ddbb_config, domain)
         return ret_val
+

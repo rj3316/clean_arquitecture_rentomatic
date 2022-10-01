@@ -3,7 +3,7 @@ import uuid
 from unittest import mock
 
 from ...domain.room import Room
-from ...use_cases.room_read_all import room_read_all
+from ...use_cases.read_all import room_read_all
 
 size_1 = 215
 price_1 = 39
