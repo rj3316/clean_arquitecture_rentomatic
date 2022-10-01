@@ -5,11 +5,12 @@ from ...simulators.domain.simulator_room import room_dicts
 def test_repository_read_all():
     sim_rooms = room_dicts()
 
+    domain = 'room'
+
     # Instanciamos Repo (RepoMem) con una lista obtenida desde la "variable mock" room_dicts
     repo = RepoFactory.create('RepoMem')
-    repo.write(sim_rooms)
+    repo.write(domain, data = sim_rooms)
 
-    domain = 'room'
 
     # Leemos el MemRepo
     rooms = repo.read(domain)

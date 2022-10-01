@@ -19,7 +19,7 @@ class RepoMem(Repo):
 
     def _read(self, domain = None):
         ret_val = None
-        if domain in self.data.keys(): ret_val = [Room.from_dict(i) for i in self.data[domain]]
+        if domain in self.data.keys():ret_val = [Room.from_dict(i) for i in self.data[domain]]
         
         return ret_val
     

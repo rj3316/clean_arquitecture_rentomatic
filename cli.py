@@ -10,18 +10,19 @@ import pdb
 testing = False
 domain = 'room'
 
-# repo_detail = 'mem'
+# Repo selector:
+#   0. RAM
+#   1. File
+#   2. SQL
+repo_selector = 1
 
-# repo_detail = 'file'
-repo_detail = 'sql'
-
-if repo_detail == 'mem':
+if repo_selector == 0:
     repo_detail = 'RepoMem'
     config = None
-elif repo_detail == 'file':
+elif repo_selector == 1:
     repo_detail = 'RepoFile'
     config = {'file': file}
-elif repo_detail == 'sql':
+elif repo_selector == 2:
     repo_detail = 'RepoSql'
     config = {'ddbb_config': mysql}
 

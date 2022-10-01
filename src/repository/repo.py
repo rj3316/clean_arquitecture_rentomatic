@@ -7,7 +7,7 @@ class Repo(ABC):
     def _configuration(self, *args, **kwargs):
         # Polymorphic method
         pass
-
+    
     def write(self, domain = None, data = None):
         return self._write(domain, data)
 

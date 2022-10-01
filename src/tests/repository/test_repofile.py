@@ -3,14 +3,13 @@ from ...domain.room import Room
 from ...simulators.domain.simulator_room import room_dicts
 from ...simulators.infraestructure.simulator_file import file
 
-def test_repository_read_all():
+def test_repository_file_read_all():
     sim_rooms = room_dicts()
 
-    repo = RepoFactory.create('RepoFile', {'file': file})
-    repo.write(sim_rooms)
-
-    # import pdb; pdb.set_trace()
     domain = 'room'
+    repo = RepoFactory.create('RepoFile', {'file': file})
+    
+    repo.write(domain, data = sim_rooms)
 
     # Leemos el MemRepo
     rooms = repo.read(domain)

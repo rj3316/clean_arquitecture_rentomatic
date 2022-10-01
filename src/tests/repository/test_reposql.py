@@ -6,11 +6,12 @@ from ...simulators.infraestructure.simulator_mysql import mysql
 def test_repository_read_all():
     sim_rooms = room_dicts()
 
+    domain = 'room'
+
     # Instanciamos RepoSql y escribimos una lista obtenida desde la "variable mock" room_dicts
     repo = RepoFactory.create('RepoSql', {'ddbb_config': mysql})
-    repo.write(sim_rooms)
+    repo.write(domain, data = sim_rooms)
 
-    domain = 'room'
 
     # Leemos el RepoSql
     rooms = repo.read(domain)
