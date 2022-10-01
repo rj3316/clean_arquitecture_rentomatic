@@ -1,3 +1,5 @@
+from ...domain.room import Room
+
 size_1 = 215
 price_1 = 39
 longitude_1 = -0.09998975
@@ -53,3 +55,7 @@ def room_dicts():
     }
     ret_val = [room_1, room_2, room_3, room_4]
     return ret_val
+
+def rooms():
+    room_dicts = room_dicts()
+    return [Room.from_dict(i) for i in room_dicts]
