@@ -5,8 +5,10 @@ from flask import Blueprint
 
 from ...simulators.domain.simulator_room import rooms, room_dicts
 
-@mock.patch("application.backend.rest.room.room_list")
+import pdb; pdb.set_trace()
+@mock.patch("clean_arquitecture_rentomatic.application.backend.rest.room.read_all")
 def test_get(mock_use_case, client):
+
     sim_rooms = room_dicts()
     mock_use_case.return_value = rooms
 

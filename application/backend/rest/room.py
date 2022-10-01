@@ -1,5 +1,4 @@
 import json
-from unittest import result
 from flask import Blueprint, Response
 
 from ....src.repository.repo_factory import RepoFactory
@@ -15,8 +14,8 @@ def read_all(domain = 'room'):
 
     repo = RepoFactory('RepoMem')
 
-    sim_rooms = room_dicts()
-    repo.write(domain, data = sim_rooms)
+    # sim_rooms = room_dicts()
+    # repo.write(domain, data = sim_rooms)
 
     result = read_all(repo, domain)
 

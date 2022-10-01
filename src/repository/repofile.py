@@ -1,9 +1,8 @@
 from os import remove
 
-from src.infraestructure.FormatterDict import FormatterDict
-
 from .repo import Repo
 from ..infraestructure.ControllerFileHandler import FileHandler
+from ..infraestructure.FormatterDict import FormatterDict
 from ..domain.room import Room
 
 class RepoFile(Repo):

@@ -28,18 +28,12 @@ elif repo_selector == 2:
 
 repo = RepoFactory.create(repo_detail, config)
 
-result = read_all(repo, domain)
+result = read_all(repo, domain, verbose=True)
 
 # Insertamos entidades de prueba
 sim_rooms = room_dicts()
 repo.write(domain = domain, data = sim_rooms)
 
-result = read_all(repo, domain)
-
-
-
-
-
-
+result = read_all(repo, domain, verbose=True)
 
 if testing: repo.initialize(domain)
