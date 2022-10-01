@@ -10,13 +10,14 @@ from ....src.simulators.domain.simulator_room import rooms, room_dicts
 blueprint = Blueprint("room", __name__)
 
 @blueprint.route("/rooms", methods = ['GET'])
-def room_list():
-    domain = 'room'
+def read_all(domain = 'room'):
+    import pdb; pdb.set_trace()
 
     repo = RepoFactory('RepoMem')
 
     sim_rooms = room_dicts()
     repo.write(domain, data = sim_rooms)
+
     result = read_all(repo, domain)
 
     return Response(
@@ -24,3 +25,4 @@ def room_list():
         mimetype = "application/json",
         status = 200,
     )
+
