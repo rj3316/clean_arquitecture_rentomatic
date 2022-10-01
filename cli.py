@@ -10,14 +10,20 @@ import pdb
 testing = False
 domain = 'room'
 
-# repo_detail = 'RepoMem'
-# config = None
+# repo_detail = 'mem'
 
-# repo_detail = 'RepoFile'
-# config = {'file': file}
+# repo_detail = 'file'
+repo_detail = 'sql'
 
-repo_detail = 'RepoSql'
-config = {'ddbb_config': mysql}
+if repo_detail == 'mem':
+    repo_detail = 'RepoMem'
+    config = None
+elif repo_detail == 'file':
+    repo_detail = 'RepoFile'
+    config = {'file': file}
+elif repo_detail == 'sql':
+    repo_detail = 'RepoSql'
+    config = {'ddbb_config': mysql}
 
 repo = RepoFactory.create(repo_detail, config)
 
