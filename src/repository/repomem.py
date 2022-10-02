@@ -1,6 +1,5 @@
 from .repo import Repo
-
-from ..domain.room import Room
+from ..domain.domainfactory import DomainFactory
 
 class RepoMem(Repo):
     def _configuration(self, config = None):
@@ -18,9 +17,13 @@ class RepoMem(Repo):
         self.data[domain] = data
 
     def _read(self, domain = None):
-        ret_val = None
-        if domain in self.data.keys():ret_val = [Room.from_dict(i) for i in self.data[domain]]
-        
+        ret_val = list()
+
+        try:
+            domains = self.data
+            if domain in domains.keys(): ret_val = DomainFactory.from_dicts(domain, self.data[domain])
+        except: pass
+                
         return ret_val
     
     def _initialize(self, domain):

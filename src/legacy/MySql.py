@@ -17,7 +17,7 @@
 # ---------------------------------------------------------------------------
 
 from sqlite3 import IntegrityError
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, false
 from sqlalchemy.pool import NullPool
 
 from inspect import getframeinfo, currentframe
@@ -317,14 +317,14 @@ class MySql(Database):
 		try: skip_structure = self.data.config['skip_structure']
 		except: skip_structure = False
 
+		table = params.get_param_by_index().table
 		# Check if table exists
 		exec = self._check_if_table_exists(params) or skip_structure
 
 		if exec:
 			# DELETE FROM table WHERE column1 = value1, column2 = value2, ...;
 			self._last_action = 'DELETE'
-
-			table = params.get_param_by_index().table
+			
 			query = f"DELETE FROM {table}"
 
 			query += f"{self.query_builder.get_filters(params)}"
@@ -350,6 +350,20 @@ class MySql(Database):
 
 			ret_val = False
 
+		return ret_val
+
+	@get_query_builder
+	def check_if_table_exists(self, table):
+		ret_val = False
+
+		query = 'SHOW TABLES;'
+
+		rs = self._execute(query)
+		for row in rs:
+			if table == row[0]:
+				ret_val = True
+				break
+		
 		return ret_val
 
 	def _format_select(self, rs, params):
@@ -513,7 +527,6 @@ class MySql(Database):
 					tables.append(tables.pop(0))
 
 			n_tables = len(tables)
-
 
 	# COLUMN MANAGEMENT
 	@get_query_builder

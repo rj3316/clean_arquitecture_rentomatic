@@ -1,38 +1,21 @@
 from json import load, dump
-from os import path, remove, path
+from os import path
 from datetime import datetime
-
-from .FormatterDict import FormatterDict
 
 class FileHandler:
     @classmethod
     def read(cls, file):
-        parameters, message = cls._read_json(file)
-        return parameters, message
+        return cls._read_json(file)
 
     @classmethod
     def write(cls, file, data = None):
-        if data is not None:
-            content, _ = cls._read_json(file)
-            data = FormatterDict.concatenate_dictionaries(data, content)
-             
+        if data is not None:            
             cls._write_json(file, data)
-
-    @classmethod
-    def delete(cls, file, domain = None):
-        # Habría que borrar sólamente el dominio que se le pasa
-        if path.exists(file):
-            remove(file)
 
     # JSON INTERFACES
     @classmethod
-    def _read_json(cls, file = None, message = None):
+    def _read_json(cls, file = None):
         ret_val = None
-
-        if message is None:
-            message = ''
-        elif isinstance(message, str) and (not message == ''):
-            message += ' '
 
         if not file is None:
             try:
@@ -41,20 +24,14 @@ class FileHandler:
                     # Leemos el archivo -> SIEMPRE EN FORMATO JSON
                     with open(file) as jsonfile:
                         ret_val = load(jsonfile)
-
-                    message += f"JSON file found: {file}"
-                else:
-                    message += f"JSON file defined but not found: {file}"
             except Exception as e:
                 if '/' in file: sep = '/'
                 else: sep = '\\'
 
                 filename = file.split(sep)[-1]
-                message += f"Error reading JSON file {filename}: {e}"
-        else:
-            message += f"No JSON file defined: {file}"
+                print(f"Error reading JSON file {filename}: {e}")
 
-        return ret_val, message
+        return ret_val
 
     @classmethod
     def _write_json(cls, file = None, data = None):

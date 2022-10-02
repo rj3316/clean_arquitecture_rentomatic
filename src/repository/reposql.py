@@ -1,7 +1,8 @@
+from telnetlib import DO
 from .repo import Repo
 from ..infraestructure.ControllerMySql import ControllerMySql
 from ..adapters.AdapterMySql import AdapterMySql
-from ..domain.room import Room
+from ..domain.domainfactory import DomainFactory
 
 class RepoSql(Repo):
     def _configuration(self, config = None):
@@ -21,13 +22,14 @@ class RepoSql(Repo):
         ControllerMySql.write(self.ddbb_config, data)
 
     def _read(self, domain = None):
-        ret_val = None
+        ret_val = list
 
-        if isinstance(domain, str): #########!!!!!
+        try:
             data = ControllerMySql.read(self.ddbb_config, domain)
             data = AdapterMySql.adapt_domain_from_sql(data)
 
-            ret_val = [Room.from_dict(i) for i in data]
+            ret_val = DomainFactory.from_dicts(domain, data)
+        except: pass
         
         return ret_val
     
@@ -35,4 +37,3 @@ class RepoSql(Repo):
         ddbb_config = self.ddbb_config
         ret_val = ControllerMySql.initialize(ddbb_config, domain)
         return ret_val
-

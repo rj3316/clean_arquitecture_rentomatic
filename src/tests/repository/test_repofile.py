@@ -1,22 +1,39 @@
 from ...repository.repo_factory import RepoFactory
-from ...domain.room import Room
+from ...domain.domainfactory import DomainFactory
 from ...simulators.domain.simulator_room import room_dicts
+from ...simulators.domain.simulator_hotel import hotel_dicts
 from ...simulators.infraestructure.simulator_file import file
 
-def test_repository_file_read_all():
-    sim_rooms = room_dicts()
-
+def test_repository_file_room_read_all():
     domain = 'room'
-    repo = RepoFactory.create('RepoFile', {'file': file})
+    sims = room_dicts()
     
-    repo.write(domain, data = sim_rooms)
+    repo = RepoFactory.create('RepoFile', {'file': file})
+    repo.initialize(domain)
+    
+    repo.write(domain, data = sims)
 
     # Leemos el MemRepo
-    rooms = repo.read(domain)
+    reals = repo.read(domain)
 
     # Creamos una lista con lo que esperamos que el MemRepo nos devuelva
-    expected_rooms = [Room.from_dict(i) for i in sim_rooms]
+    expected = DomainFactory.from_dicts(domain, sims)
 
-    repo.initialize()
+    assert reals == expected
 
-    assert rooms == expected_rooms
+def test_repository_file_hotel_read_all():
+    domain = 'hotel'
+    sims = hotel_dicts()
+    
+    repo = RepoFactory.create('RepoFile', {'file': file})
+    repo.initialize(domain)
+    
+    repo.write(domain, data = sims)
+
+    # Leemos el MemRepo
+    reals = repo.read(domain)
+
+    # Creamos una lista con lo que esperamos que el MemRepo nos devuelva
+    expected = DomainFactory.from_dicts(domain, sims)
+
+    assert reals == expected

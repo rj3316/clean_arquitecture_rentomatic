@@ -68,4 +68,7 @@ def test_room_model_serializer():
 
     json_room = json.dumps(room, cls = RoomJsonEncoder)
 
-    assert json.loads(json_room) == json.loads(json_expected)
+    dict_json_room = json.loads(json_room)
+    dict_json_expected = json.loads(json_expected)
+
+    assert dict_json_room == dict_json_expected

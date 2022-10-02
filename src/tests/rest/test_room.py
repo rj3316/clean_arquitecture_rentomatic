@@ -5,7 +5,7 @@ from flask import Blueprint
 
 from ...simulators.domain.simulator_room import rooms, room_dicts
 
-import pdb; pdb.set_trace()
+# import pdb; pdb.set_trace()
 @mock.patch("clean_arquitecture_rentomatic.application.backend.rest.room.read_all")
 def test_get(mock_use_case, client):
 

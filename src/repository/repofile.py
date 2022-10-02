@@ -1,9 +1,7 @@
-from os import remove
-
 from .repo import Repo
+from ..domain.domainfactory import DomainFactory
 from ..infraestructure.ControllerFileHandler import FileHandler
 from ..infraestructure.FormatterDict import FormatterDict
-from ..domain.room import Room
 
 class RepoFile(Repo):
     def _configuration(self, config = None):
@@ -20,7 +18,7 @@ class RepoFile(Repo):
 
     def _write(self, domain = None, data = None):
         # Leemos el valor actual
-        current, _ = FileHandler.read(self.file)
+        current = FileHandler.read(self.file)
 
         # Compactamos data con su dominio y concatenamos con el valor actual
         data = {domain: data}
@@ -30,15 +28,23 @@ class RepoFile(Repo):
         FileHandler.write(self.file, data)
 
     def _read(self, domain = None):
-        ret_val, _ = FileHandler.read(self.file)
+        ret_val = list()
 
         try:
-            if isinstance(domain, str): ret_val = ret_val[domain]
-            ret_val = [Room.from_dict(i) for i in ret_val]
-        except:
-            ret_val = None
+            domains = FileHandler.read(self.file)
+            if domain in domains:
+                ret_val = DomainFactory.from_dicts(domain, domains[domain])
+        except Exception as e:
+            pass
 
         return ret_val
     
     def _initialize(self, domain):
-        FileHandler.delete(self.file, domain)
+        data = FileHandler.read(self.file)
+
+        try:
+            if domain in data.keys():
+                data[domain] = list()
+                FileHandler.write(self.file, data)
+        except: pass
+        
