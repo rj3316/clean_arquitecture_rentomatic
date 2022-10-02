@@ -1,4 +1,4 @@
-from ...domain.room import Room
+from ...domain.domainfactory import DomainFactory
 
 size_1 = 215
 price_1 = 39
@@ -57,5 +57,7 @@ def room_dicts():
     return ret_val
 
 def rooms():
-    room_dicts = room_dicts()
-    return [Room.from_dict(i) for i in room_dicts]
+    domain = 'room'
+    dicts = room_dicts()
+
+    return DomainFactory.create(domain, dicts)

@@ -1,4 +1,4 @@
-from ...domain.hotel import Hotel
+from ...domain.domainfactory import DomainFactory
 
 nif_1 = 'B12345678'
 name_1 = 'Hoteles Paco'
@@ -26,5 +26,7 @@ def hotel_dicts():
     return ret_val
 
 def hotels():
-    hotel_dicts = hotel_dicts()
-    return [Hotel.from_dict(i) for i in hotel_dicts]
+    domain = 'hotel'
+    dicts = hotel_dicts()
+
+    return DomainFactory.create(domain, dicts)
