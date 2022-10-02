@@ -5,7 +5,7 @@ def create_app(config_name = None):
 
     app = Flask(__name__)
 
-    config_module = f"clean_arquitecture_rentomatic.application.backend.config.{config_name.capitalize()}Config"
-    app.config.from_object(config_module)
+    # config_module = f"clean_arquitecture_rentomatic.application.backend.config.{config_name.capitalize()}Config"
+    # app.config.from_object(config_module)
 
     return app

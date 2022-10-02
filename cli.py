@@ -1,4 +1,3 @@
-from telnetlib import DO
 from src.repository.repo_factory import RepoFactory
 from src.use_cases.read_all import ReadAll
 

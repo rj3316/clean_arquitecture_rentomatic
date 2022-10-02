@@ -33,7 +33,7 @@ class RepoFile(Repo):
         try:
             domains = FileHandler.read(self.file)
             if domain in domains:
-                ret_val = DomainFactory.from_dicts(domain, domains[domain])
+                ret_val = DomainFactory.create(domain, domains[domain])
         except Exception as e:
             pass
 

@@ -3,7 +3,18 @@ from .hotel import Hotel
 
 class DomainFactory:
     @classmethod
-    def create_domain(cls, domain = None, config = None):
+    def create(cls, domain = None, config = None):
+        ret_val = None
+
+        if domain is not None:
+            if not isinstance(config, list): config = [config]
+
+            ret_val =  [cls._create(domain, i) for i in config]
+
+        return ret_val
+
+    @classmethod
+    def _create(cls, domain, config):
         ret_val = None
 
         if domain is not None:
@@ -15,7 +26,3 @@ class DomainFactory:
                 else: ret_val = Hotel()
 
         return ret_val
-
-    @classmethod
-    def from_dicts(cls, domain, dicts):
-        return [cls.create_domain(domain, i) for i in dicts]

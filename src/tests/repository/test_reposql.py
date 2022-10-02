@@ -18,7 +18,7 @@ def test_repository_sql_room_read_all():
     reals = repo.read(domain)
 
     # Creamos una lista con lo que esperamos que el RepoSql nos devuelva
-    expected = DomainFactory.from_dicts(domain, sims)
+    expected = DomainFactory.create(domain, sims)
 
     assert reals == expected
 
@@ -36,7 +36,7 @@ def test_repository_sql_hotel_read_all():
     reals = repo.read(domain)
 
     # Creamos una lista con lo que esperamos que el RepoSql nos devuelva
-    expected = DomainFactory.from_dicts(domain, sims)
+    expected = DomainFactory.create(domain, sims)
 
     assert reals == expected
 

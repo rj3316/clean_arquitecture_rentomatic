@@ -17,7 +17,7 @@ def test_repository_file_room_read_all():
     reals = repo.read(domain)
 
     # Creamos una lista con lo que esperamos que el MemRepo nos devuelva
-    expected = DomainFactory.from_dicts(domain, sims)
+    expected = DomainFactory.create(domain, sims)
 
     assert reals == expected
 
@@ -34,6 +34,6 @@ def test_repository_file_hotel_read_all():
     reals = repo.read(domain)
 
     # Creamos una lista con lo que esperamos que el MemRepo nos devuelva
-    expected = DomainFactory.from_dicts(domain, sims)
+    expected = DomainFactory.create(domain, sims)
 
     assert reals == expected

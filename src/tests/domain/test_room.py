@@ -2,7 +2,10 @@ import uuid
 import json
 
 from ...domain.room import Room
-from ...serializers.room import RoomJsonEncoder
+from ...domain.domainfactory import DomainFactory
+from ...serializers.factoryserializer import SerializerFactory
+
+domain = 'room'
 
 code = uuid.uuid4()
 size = 200
@@ -19,7 +22,7 @@ init_dict = {
 }
 
 def test_room_model_init():
-    room = Room(
+    dom = Room(
         code,
         size = size,
         price = price,
@@ -27,34 +30,35 @@ def test_room_model_init():
         latitude = latitude,
     )
 
-    assert room.code == code
-    assert room.size == size
-    assert room.price == price
-    assert room.longitude == longitude
-    assert room.latitude == latitude
+    assert dom.code == code
+    assert dom.size == size
+    assert dom.price == price
+    assert dom.longitude == longitude
+    assert dom.latitude == latitude
 
 def test_room_model_from_dict():
-    room = Room.from_dict(init_dict)
+    dom = DomainFactory.create(domain, init_dict)[0]
 
-    assert room.code == code
-    assert room.size == size
-    assert room.price == price
-    assert room.longitude == longitude
-    assert room.latitude == latitude
+    assert dom.code == code
+    assert dom.size == size
+    assert dom.price == price
+    assert dom.longitude == longitude
+    assert dom.latitude == latitude
 
 def test_room_model_to_dict():
-    room = Room.from_dict(init_dict)
+    dom = DomainFactory.create(domain, init_dict)[0]
 
-    assert room.to_dict() == init_dict
+    assert dom.to_dict() == init_dict
 
 def test_room_model_comparison():
-    room1 = Room.from_dict(init_dict)
-    room2 = Room.from_dict(init_dict)
+    dom1 = DomainFactory.create(domain, init_dict)[0]
+    dom2 = DomainFactory.create(domain, init_dict)[0]
 
-    assert room1 == room2
+    assert dom1 == dom2
 
 def test_room_model_serializer():
-    room = Room.from_dict(init_dict)
+    dom = DomainFactory.create(domain, init_dict)[0]
+    serializer = SerializerFactory.create(domain)
 
     json_expected = f"""
         {{
@@ -66,9 +70,9 @@ def test_room_model_serializer():
         }}
     """
 
-    json_room = json.dumps(room, cls = RoomJsonEncoder)
+    json_dom = json.dumps(dom, cls = serializer)
 
-    dict_json_room = json.loads(json_room)
+    dict_json_dom = json.loads(json_dom)
     dict_json_expected = json.loads(json_expected)
 
-    assert dict_json_room == dict_json_expected
+    assert dict_json_dom == dict_json_expected

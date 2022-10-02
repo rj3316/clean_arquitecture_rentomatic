@@ -21,7 +21,7 @@ class RepoMem(Repo):
 
         try:
             domains = self.data
-            if domain in domains.keys(): ret_val = DomainFactory.from_dicts(domain, self.data[domain])
+            if domain in domains.keys(): ret_val = DomainFactory.create(domain, self.data[domain])
         except: pass
                 
         return ret_val

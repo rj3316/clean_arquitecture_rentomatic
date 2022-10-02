@@ -70,7 +70,7 @@ class ControllerMySql(Controller):
 
     @classmethod
     def _create_domain_table(cls, ddbb_config, domain):
-        dom = DomainFactory.create_domain(domain)
+        dom = DomainFactory.create(domain)
         fields = dom.describe()
 
         config = cls._get_ddbb_config(ddbb_config)

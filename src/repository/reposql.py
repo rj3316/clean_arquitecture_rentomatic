@@ -28,7 +28,7 @@ class RepoSql(Repo):
             data = ControllerMySql.read(self.ddbb_config, domain)
             data = AdapterMySql.adapt_domain_from_sql(data)
 
-            ret_val = DomainFactory.from_dicts(domain, data)
+            ret_val = DomainFactory.create(domain, data)
         except: pass
         
         return ret_val
