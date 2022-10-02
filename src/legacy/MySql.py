@@ -217,6 +217,8 @@ class MySql(Database):
 		try: skip_structure = self.data.config['skip_structure']
 		except: skip_structure = False
 
+		table = params.get_param_by_index().table
+
 		# Check if table exists
 		exec = self._check_if_table_exists(params) or skip_structure
 
@@ -224,7 +226,6 @@ class MySql(Database):
 			# INSERT INTO table column1, column2, ... VALUES value1, value2, ...;
 			self._last_action = 'INSERT'
 
-			table = params.get_param_by_index().table
 			n_columns = self.get_values_quantity(params)
 			n_records  = len(params.get_params())			
 
@@ -270,6 +271,8 @@ class MySql(Database):
 		try: skip_structure = self.data.config['skip_structure']
 		except: skip_structure = False
 
+		table = params.get_param_by_index().table
+
 		# Check if table exists
 		exec = self._check_if_table_exists(params) or skip_structure
 
@@ -277,7 +280,6 @@ class MySql(Database):
 			# UPDATE table SET column1 = value1, column2 = value2, ... WHERE column1 = value1, column2 = value2, ...;
 			self._last_action = 'UPDATE'
 
-			table = params.get_param_by_index().table
 			query = f"UPDATE {table}"
 
 			# Añadimos los updates
@@ -318,6 +320,7 @@ class MySql(Database):
 		except: skip_structure = False
 
 		table = params.get_param_by_index().table
+		
 		# Check if table exists
 		exec = self._check_if_table_exists(params) or skip_structure
 
@@ -356,13 +359,15 @@ class MySql(Database):
 	def check_if_table_exists(self, table):
 		ret_val = False
 
-		query = 'SHOW TABLES;'
+		try:
+			query = 'SHOW TABLES;'
 
-		rs = self._execute(query)
-		for row in rs:
-			if table == row[0]:
-				ret_val = True
-				break
+			rs = self._execute(query)
+			for row in rs:
+				if table == row[0]:
+					ret_val = True
+					break
+		except: pass
 		
 		return ret_val
 
