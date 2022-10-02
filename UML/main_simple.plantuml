@@ -23,7 +23,6 @@ interface AdapterMySql
 interface FormatterDict
 
 class Web_App
-class Web_Domain
 class Web_Config
 class Web_ConfigProduction
 class Web_ConfigDevelopment
@@ -72,6 +71,6 @@ Web_Config <|-- Web_ConfigDevelopment
 Web_Config <|-- Web_ConfigTesting
 
 Web_App o-- Web_Config
-Web_App o-- Web_Domain
 
+Web_App --> UseCase
 @enduml
