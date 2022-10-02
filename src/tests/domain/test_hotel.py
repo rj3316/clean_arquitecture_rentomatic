@@ -33,7 +33,7 @@ def test_hotel_model_init():
     assert dom.rooms == rooms
 
 def test_hotel_model_from_dict():
-    dom = DomainFactory.create(domain, init_dict)[0]
+    dom = DomainFactory.create(domain, init_dict)
 
     assert dom.code == code
     assert dom.nif == nif
@@ -41,18 +41,18 @@ def test_hotel_model_from_dict():
     assert dom.rooms == rooms
 
 def test_hotel_model_to_dict():
-    dom = DomainFactory.create(domain, init_dict)[0]
+    dom = DomainFactory.create(domain, init_dict)
 
     assert dom.to_dict() == init_dict
 
 def test_hotel_model_comparison():
-    hotel1 = DomainFactory.create(domain, init_dict)[0]
-    hotel2 = DomainFactory.create(domain, init_dict)[0]  
+    hotel1 = DomainFactory.create(domain, init_dict)
+    hotel2 = DomainFactory.create(domain, init_dict)  
 
     assert hotel1 == hotel2
 
 def test_hotel_model_serializer():
-    dom = DomainFactory.create(domain, init_dict)[0]
+    dom = DomainFactory.create(domain, init_dict)
 
     serializer = SerializerFactory.create(domain)
 

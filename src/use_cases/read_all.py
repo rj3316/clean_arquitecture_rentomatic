@@ -1,6 +1,4 @@
-from .use_case import UseCase
-
-class ReadAll(UseCase):
+class ReadAll:
     @classmethod
-    def read_all(self, repo, domain, verbose = False):
+    def read_all(self, repo, domain = 'room', verbose = False):
         return repo.read(domain, verbose)

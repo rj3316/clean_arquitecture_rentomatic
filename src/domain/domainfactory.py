@@ -1,3 +1,4 @@
+from operator import is_
 from .room import Room
 from .hotel import Hotel
 
@@ -7,10 +8,13 @@ class DomainFactory:
         ret_val = None
 
         if domain is not None:
+            is_dict = False
+            if isinstance(config, dict): is_dict = True
+
             if not isinstance(config, list): config = [config]
 
             ret_val =  [cls._create(domain, i) for i in config]
-
+            if is_dict: ret_val = ret_val[0]
         return ret_val
 
     @classmethod

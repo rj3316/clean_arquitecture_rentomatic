@@ -37,7 +37,7 @@ def test_room_model_init():
     assert dom.latitude == latitude
 
 def test_room_model_from_dict():
-    dom = DomainFactory.create(domain, init_dict)[0]
+    dom = DomainFactory.create(domain, init_dict)
 
     assert dom.code == code
     assert dom.size == size
@@ -46,18 +46,18 @@ def test_room_model_from_dict():
     assert dom.latitude == latitude
 
 def test_room_model_to_dict():
-    dom = DomainFactory.create(domain, init_dict)[0]
+    dom = DomainFactory.create(domain, init_dict)
 
     assert dom.to_dict() == init_dict
 
 def test_room_model_comparison():
-    dom1 = DomainFactory.create(domain, init_dict)[0]
-    dom2 = DomainFactory.create(domain, init_dict)[0]
+    dom1 = DomainFactory.create(domain, init_dict)
+    dom2 = DomainFactory.create(domain, init_dict)
 
     assert dom1 == dom2
 
 def test_room_model_serializer():
-    dom = DomainFactory.create(domain, init_dict)[0]
+    dom = DomainFactory.create(domain, init_dict)
     serializer = SerializerFactory.create(domain)
 
     json_expected = f"""

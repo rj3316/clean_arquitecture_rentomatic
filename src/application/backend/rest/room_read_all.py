@@ -1,25 +1,24 @@
 import json
 from flask import Blueprint, Response, request
 
-from ..repository.repo_factory import RepoFactory
-from ..use_cases.read_all import ReadAll
-from ..serializers.factoryserializer import SerializerFactory
+from ....use_cases.room_read_all import ReadAll
+from ....repository.repo_factory import RepoFactory
+from ....serializers.factoryserializer import SerializerFactory
 
-from ..simulators.infraestructure.simulator_file import file
-from ..simulators.infraestructure.simulator_mysql import mysql
+from ....simulators.infraestructure.simulator_file import file
+from ....simulators.infraestructure.simulator_mysql import mysql
 
 blueprint = Blueprint("room", __name__)
 
-@blueprint.route("/domains", methods = ['GET'])
+@blueprint.route("/rooms", methods = ['GET'])
 def read_all():
-    # Identificamos el dominio con el que se quiere trabajar
-    domain = request.args.get('domain')
-    if domain is None: domain = 'room'
-    
+    # Identificamos la entidad de dominio que se ha pedido
+    domain = 'room'
+
     # Obtenemos el repositorio (repo_selector = ...)
     # 0: RAM
     # 1: File
-    # 2: SQL
+    # 2: SQL    
     repo_selector = 1
     if repo_selector == 0:
         config = None
