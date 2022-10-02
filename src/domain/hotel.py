@@ -1,8 +1,8 @@
-import dataclasses
+from dataclasses import dataclass
 
 from .entity import Entity
 
-@dataclasses.dataclass
+@dataclass
 class Hotel(Entity):
     nif: str = ''
     name: str = ''

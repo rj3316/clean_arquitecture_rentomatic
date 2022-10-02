@@ -26,3 +26,4 @@ class Entity:
                 attributes.append(attribute)
 
         return attributes
+
