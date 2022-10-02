@@ -8,7 +8,7 @@ from ....serializers.factoryserializer import SerializerFactory
 from ....simulators.infraestructure.simulator_file import file
 from ....simulators.infraestructure.simulator_mysql import mysql
 
-blueprint = Blueprint("room", __name__)
+blueprint = Blueprint("domain", __name__)
 
 @blueprint.route("/domains", methods = ['GET'])
 def read_all():

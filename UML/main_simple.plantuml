@@ -1,0 +1,77 @@
+@startuml
+class Factory
+class DomainFactory
+class RepoFactory
+
+class Domain
+class Room
+class Hotel
+
+interface IRepository
+interface Repository
+interface RepoMem
+interface RepoFile
+interface RepoSql
+
+interface IControllerFileHandler
+interface ControllerFileHandler
+
+interface IControllerMySql
+interface ControllerMySql
+
+interface AdapterMySql
+interface FormatterDict
+
+class Web_App
+class Web_Domain
+class Web_Config
+class Web_ConfigProduction
+class Web_ConfigDevelopment
+class Web_ConfigTesting
+
+abstract UseCase
+abstract ReadAll
+abstract Write
+
+
+Factory <|-- DomainFactory
+Factory <|-- RepoFactory
+' Domain <-- DomainFactory
+' Repository <-- RepoFactory
+
+Domain <|-- Room
+Domain <|-- Hotel
+
+IRepository <|-- Repository
+
+Repository <|-- RepoMem
+Repository <|-- RepoFile
+Repository <|-- RepoSql
+
+RepoFile o-- IControllerFileHandler
+IControllerFileHandler <|-- ControllerFileHandler
+
+RepoFile o-- FormatterDict
+
+
+RepoSql o-- IControllerMySql
+IControllerMySql <|-- ControllerMySql
+RepoSql o-- AdapterMySql
+
+UseCase <|---- ReadAll
+UseCase <|---- Write
+
+' UseCase o-- RepoFactory
+' UseCase o-- DomainFactory
+UseCase --> Room
+UseCase --> Hotel
+UseCase <-- IRepository
+
+Web_Config <|-- Web_ConfigProduction
+Web_Config <|-- Web_ConfigDevelopment
+Web_Config <|-- Web_ConfigTesting
+
+Web_App o-- Web_Config
+Web_App o-- Web_Domain
+
+@enduml
