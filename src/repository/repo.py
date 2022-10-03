@@ -11,11 +11,9 @@ class Repo(ABC):
     def write(self, domain = None, data = None):
         return self._write(domain, data)
 
-    def read(self, domain = None, verbose = False):
+    def read(self, domain = None):
         ret_val = self._read(domain)
         if ret_val is None: ret_val = list()
-
-        if verbose: print(ret_val)
 
         return ret_val
 
@@ -33,3 +31,4 @@ class Repo(ABC):
     @abstractmethod
     def _initialize(self):
         pass
+

@@ -1,11 +1,13 @@
 from src.repository.repo_factory import RepoFactory
-from src.use_cases.read_all import ReadAll
+from src.use_cases.read import ReadAll
 
 from src.domain.domainfactory import DomainFactory
-from src.simulators.domain.simulator_room import room_dicts
-from src.simulators.domain.simulator_hotel import hotel_dicts
-from src.simulators.infraestructure.simulator_file import file
-from src.simulators.infraestructure.simulator_mysql import mysql
+from src.simulators.factorysimulator import FactorySimulator
+
+# from src.simulators.domain.simulator_room import room_dicts
+# from src.simulators.domain.simulator_hotel import hotel_dicts
+# from src.simulators.infraestructure.simulator_file import file
+# from src.simulators.infraestructure.simulator_mysql import mysql
 
 testing = False
 
@@ -16,13 +18,12 @@ domain_selector = 1
 
 if domain_selector == 0:
     domain = 'room'
-    sims = room_dicts()
 
 elif domain_selector == 1:
     domain = 'hotel'
-    sims = hotel_dicts()
 
-domains = DomainFactory.from_dicts(domain, sims)
+sims = FactorySimulator.create_domain_dicts(domain)
+domains = DomainFactory.create(domain, sims)
 
 # Repo selector:
 #   0. RAM
@@ -32,13 +33,12 @@ repo_selector = 2
 
 if repo_selector == 0:
     repo_detail = 'RepoMem'
-    config = None
 elif repo_selector == 1:
     repo_detail = 'RepoFile'
-    config = {'file': file}
 elif repo_selector == 2:
     repo_detail = 'RepoSql'
-    config = {'ddbb_config': mysql}
+
+config = FactorySimulator.create_repository_config(repo_detail)
 
 repo = RepoFactory.create(repo_detail, config)
 
