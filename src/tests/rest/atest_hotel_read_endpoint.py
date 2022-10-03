@@ -3,7 +3,7 @@ import json
 
 from ...simulators.factorysimulator import FactorySimulator
 
-@mock.patch("clean_arquitecture_rentomatic.src.application.backend.rest.hotel_read_all")
+@mock.patch("clean_arquitecture_rentomatic.src.application.backend.rest.hotel_read.read")
 def test_get(mock_use_case, client):
     domain = 'hotel'
 

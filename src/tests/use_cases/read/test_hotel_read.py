@@ -1,10 +1,10 @@
 from unittest import mock
 
-from ...responses import ResponseTypes
+from ....responses import ResponseTypes
 
-from ...use_cases.hotel_read import HotelRead
-from ...requests.hotel_read_request import BuilderHotelReadRequest
-from ...simulators.factorysimulator import FactorySimulator
+from ....use_cases.hotel_read import HotelRead
+from ....requests.builder_hotel_read_request import BuilderHotelReadRequest
+from ....simulators.factorysimulator import FactorySimulator
 
 domain = 'hotel'
 
@@ -12,7 +12,7 @@ def test_hotel_read_without_parameters():
     repo = mock.Mock()
     repo.read.return_value = FactorySimulator.create_domain_objects(domain)
 
-    request = BuilderHotelReadRequest.build_hotel_read_request()
+    request = BuilderHotelReadRequest.build_read_request()
 
     response = HotelRead.read(repo, request, domain)
 
@@ -27,7 +27,7 @@ def test_hotel_read_with_filters():
     repo.read.return_value = FactorySimulator.create_domain_objects(domain)
 
     query_filters = {'code__eq': 5}
-    request = BuilderHotelReadRequest.build_hotel_read_request(filters = query_filters)
+    request = BuilderHotelReadRequest.build_read_request(filters = query_filters)
 
     response = HotelRead.read(repo, request, domain)
 
@@ -39,7 +39,7 @@ def test_hotel_read_handles_generic_error():
     repo.read.side_effect = Exception("Just an error message")
 
     query_filters = {}
-    request = BuilderHotelReadRequest.build_hotel_read_request(filters = query_filters)
+    request = BuilderHotelReadRequest.build_read_request(filters = query_filters)
 
     response = HotelRead.read(repo, request, domain)
 
@@ -53,7 +53,7 @@ def test_hotel_read_handles_bad_request():
     repo = mock.Mock()
 
     query_filters = 5
-    request = BuilderHotelReadRequest.build_hotel_read_request(filters = query_filters)
+    request = BuilderHotelReadRequest.build_read_request(filters = query_filters)
 
     response = HotelRead.read(repo, request, domain)
 

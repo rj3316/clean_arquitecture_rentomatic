@@ -1,6 +1,6 @@
-from operator import is_
 from .room import Room
 from .hotel import Hotel
+from .converter import Converter
 
 class DomainFactory:
     @classmethod
@@ -28,5 +28,8 @@ class DomainFactory:
             elif domain == 'hotel':
                 if isinstance(config, dict): ret_val = Hotel.from_dict(config)
                 else: ret_val = Hotel()
+            elif domain == 'converter':
+                if isinstance(config, dict): ret_val = Converter.from_dict(config)
+                else: ret_val = Converter()
 
         return ret_val

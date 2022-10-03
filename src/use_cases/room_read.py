@@ -9,9 +9,7 @@ class RoomRead:
             return build_response_from_invalid_request(request)
         try:
             filters = request.filters
-        
-            objs = repo.read(domain)
-            # objs = repo.read(domain, filters = filters)
+            objs = repo.read(domain, filters)
             return ResponseSuccess(objs)
         except Exception as e:
             return ResponseFailure(ResponseTypes.SYSTEM_ERROR, e)

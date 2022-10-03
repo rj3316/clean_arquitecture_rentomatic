@@ -1,6 +1,4 @@
-from dataclasses import dataclass
-
-from .entity import Entity
+from .entity import Entity, dataclass
 
 @dataclass
 class Room(Entity):
