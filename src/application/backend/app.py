@@ -1,7 +1,7 @@
 from flask import Flask
-from .rest.domain_read_all import blueprint as blueprint_domain
-from .rest.room_read_all import blueprint as blueprint_room
-from .rest.hotel_read_all import blueprint as blueprint_hotel
+from .rest.read import blueprint as blueprint_domain
+from .rest.room_read import blueprint as blueprint_room
+from .rest.hotel_read import blueprint as blueprint_hotel
 
 def create_app(config_name = None):  
     if config_name is None: config_name = 'testing'

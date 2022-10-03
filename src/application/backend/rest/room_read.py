@@ -1,42 +1,44 @@
 import json
 from flask import Blueprint, Response, request
 
-from ..repository.repo_factory import RepoFactory
-from ..use_cases.read_all import ReadAll
-from ..serializers.factoryserializer import SerializerFactory
+from ....use_cases.room_read import RoomRead
 
-from ..simulators.infraestructure.simulator_file import file
-from ..simulators.infraestructure.simulator_mysql import mysql
+from ....repository.repo_factory import RepoFactory
+from ....serializers.factoryserializer import SerializerFactory
+
+from ....requests.room_read_request import BuilderRoomReadRequest
+
+from ....simulators.factorysimulator import FactorySimulator
 
 blueprint = Blueprint("room", __name__)
 
 @blueprint.route("/rooms", methods = ['GET'])
-def read_all():
-    # Identificamos el dominio con el que se quiere trabajar
+def read():
+    # Identificamos la entidad de dominio que se ha pedido
     domain = 'room'
     
     # Obtenemos el repositorio (repo_selector = ...)
     # 0: RAM
     # 1: File
-    # 2: SQL
+    # 2: SQL    
     repo_selector = 1
     if repo_selector == 0:
-        config = None
         repo_detail = 'RepoMem'
     elif repo_selector == 1:
-        config = {'ddbb_config': mysql}
         repo_detail = 'RepoSql'
     elif repo_selector == 2:
-        config = {'file': file}
         repo_detail = 'RepoFile'
+    config = FactorySimulator.create_repository_config(repo_detail)
     repo = RepoFactory.create(repo_detail, config)
 
+    req = BuilderRoomReadRequest.build_room_read_request(request.args)
+
     # Aplicamos el UseCase
-    result = ReadAll.read_all(repo, domain)
+    result = RoomRead.read(repo, req, domain)
 
     serializer = SerializerFactory.create(domain)
     return Response(
-        json.dumps(result, cls = serializer),
+        json.dumps(result.value, cls = serializer),
         mimetype = "application/json",
         status = 200,
     )
