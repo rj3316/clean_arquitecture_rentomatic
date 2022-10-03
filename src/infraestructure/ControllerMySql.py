@@ -1,5 +1,5 @@
 from ..legacy.MySql import MySql
-from .controller import Controller
+from .Controller import Controller
 
 from ..domain.domainfactory import DomainFactory
 

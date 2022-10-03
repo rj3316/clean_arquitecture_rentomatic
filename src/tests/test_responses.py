@@ -1,8 +1,5 @@
-from urllib import response
-
-from flask import request
 from ..responses import ResponseSuccess, ResponseFailure, ResponseTypes, build_response_from_invalid_request
-from ..requests.room_read_request import RoomReadInvalidRequest
+from ..requests.builder_read_request import ReadInvalidRequest
 
 SUCCESS_VALUE = {'key': ['value1', 'value2']}
 GENERIC_RESPONSE_TYPE = 'Response'
@@ -48,13 +45,13 @@ def test_response_failure_initialization_with_exception():
     assert response.message == "Exception: Just an error message"
 
 def test_response_failure_from_empty_invalid_request():
-    response = build_response_from_invalid_request(RoomReadInvalidRequest())
+    response = build_response_from_invalid_request(ReadInvalidRequest())
     
     assert bool(response) is False
     assert response.type == ResponseTypes.PARAMETERS_ERROR
 
 def test_response_failure_from_invalid_request_with_errors():
-    request = RoomReadInvalidRequest()
+    request = ReadInvalidRequest()
     request.add_error('path', "Is mandatory")    
     request.add_error('path', "cannot be blank")
 

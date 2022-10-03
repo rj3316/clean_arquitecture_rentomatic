@@ -1,21 +1,22 @@
 import json
 from flask import Blueprint, Response, request
 
-from ....use_cases.read import Read
-from ....requests.read_request import BuilderReadRequest
+from ....use_cases.room_read import RoomRead
+
 from ....repository.repo_factory import RepoFactory
 from ....serializers.factoryserializer import SerializerFactory
 
+from ....requests.builder_room_read_request import BuilderRoomReadRequest
+
 from ....simulators.factorysimulator import FactorySimulator
 
-blueprint = Blueprint("domain", __name__)
+blueprint = Blueprint("room", __name__)
 
-@blueprint.route("/domains", methods = ['GET'])
+@blueprint.route("/rooms", methods = ['GET'])
 def read():
     # Identificamos la entidad de dominio que se ha pedido
-    domain = request.args.get('domain')
-    # if domain is None: domain = 'room'
-
+    domain = 'room'
+    
     # Obtenemos el repositorio (repo_selector = ...)
     # 0: RAM
     # 1: File
@@ -29,12 +30,19 @@ def read():
         repo_detail = 'RepoFile'
     config = FactorySimulator.create_repository_config(repo_detail)
     repo = RepoFactory.create(repo_detail, config)
+    
+    # import pdb; pdb.set_trace()
+    # Contruimos la request
+    query_request = {
+        'filters': {}
+    }
+    for arg, value in request.args.items():
+        if arg.startswith('filter_'): query_request['filters'][arg.replace('filter_', '')] = value
+
+    req = BuilderRoomReadRequest.build_room_read_request(query_request['filters'])
 
     # Aplicamos el UseCase
-    req = BuilderReadRequest.build_read_request(request.args)
-
-    # Aplicamos el UseCase
-    result = Read.read(repo, req, domain)
+    result = RoomRead.read(repo, req, domain)
 
     serializer = SerializerFactory.create(domain)
     return Response(
@@ -42,3 +50,4 @@ def read():
         mimetype = "application/json",
         status = 200,
     )
+
