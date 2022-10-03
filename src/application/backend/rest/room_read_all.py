@@ -1,5 +1,5 @@
 import json
-from flask import Blueprint, Response, request
+from flask import Blueprint, Response
 
 from ....use_cases.room_read_all import ReadAll
 from ....repository.repo_factory import RepoFactory
@@ -32,7 +32,7 @@ def read_all():
     repo = RepoFactory.create(repo_detail, config)
 
     # Aplicamos el UseCase
-    result = ReadAll.read_all(repo, domain)
+    result = ReadAll.read_all(repo)
 
     serializer = SerializerFactory.create(domain)
     return Response(

@@ -1,5 +1,11 @@
+from ..responses import ResponseSuccess
+
 class ReadAll:
     @classmethod
-    def read_all(self, repo, domain = 'hotel', verbose = False):
+    def read_all(self, repo, request, domain = 'hotel'):
         domain = 'hotel'
-        return repo.read(domain, verbose)
+        objs = repo.read(domain)
+
+        return ResponseSuccess(objs)
+
+

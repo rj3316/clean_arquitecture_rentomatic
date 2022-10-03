@@ -19,7 +19,6 @@ def read_all():
     # 0: RAM
     # 1: File
     # 2: SQL
-
     repo_selector = 1
     if repo_selector == 0:
         config = None
@@ -33,7 +32,7 @@ def read_all():
     repo = RepoFactory.create(repo_detail, config)
 
     # Aplicamos el UseCase
-    result = ReadAll.read_all(repo, domain)
+    result = ReadAll.read_all(repo)
 
     serializer = SerializerFactory.create(domain)
     return Response(
