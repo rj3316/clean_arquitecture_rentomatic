@@ -1,8 +1,8 @@
-from .room import Room
-from .hotel import Hotel
-from .converter import Converter
+from ..domain.room import Room
+from ..domain.hotel import Hotel
+from ..domain.converter import Converter
 
-class DomainFactory:
+class FactoryDomain:
     @classmethod
     def create(cls, domain = None, config = None):
         ret_val = None

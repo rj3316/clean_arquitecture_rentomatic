@@ -1,7 +1,7 @@
 from unittest import mock
 import json
 
-from ...simulators.factorysimulator import FactorySimulator
+from ...factory.factory_simulator import FactorySimulator
 
 @mock.patch("clean_arquitecture_rentomatic.src.application.backend.rest.hotel_read.read")
 def test_get(mock_use_case, client):

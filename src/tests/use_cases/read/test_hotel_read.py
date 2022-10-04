@@ -4,7 +4,7 @@ from ....responses import ResponseTypes
 
 from ....use_cases.hotel_read import HotelRead
 from ....requests.builder_hotel_read_request import BuilderHotelReadRequest
-from ....simulators.factorysimulator import FactorySimulator
+from ....factory.factory_simulator import FactorySimulator
 
 domain = 'hotel'
 

@@ -1,5 +1,5 @@
 from .repo import Repo
-from ..domain.domainfactory import DomainFactory
+from ..factory.factory_domain import FactoryDomain
 from ..infraestructure.ControllerFileHandler import FileHandler
 from ..infraestructure.FormatterDict import FormatterDict
 
@@ -33,7 +33,7 @@ class RepoFile(Repo):
         try:
             domains = FileHandler.read(self.file)
             if domain in domains:
-                ret_val = DomainFactory.create(domain, domains[domain])
+                ret_val = FactoryDomain.create(domain, domains[domain])
         except Exception as e:
             pass
 

@@ -3,12 +3,12 @@ from flask import Blueprint, Response, request
 
 from ....use_cases.room_read import RoomRead
 
-from ....repository.repo_factory import RepoFactory
-from ....serializers.factoryserializer import SerializerFactory
+from ....factory.factory_repository import FactoryRepository
+from ....factory.factory_serializer import FactorySerializer
 
 from ....requests.builder_room_read_request import BuilderRoomReadRequest
 
-from ....simulators.factorysimulator import FactorySimulator
+from ....factory.factory_simulator import FactorySimulator
 
 blueprint = Blueprint("room", __name__)
 
@@ -29,7 +29,7 @@ def read():
     elif repo_selector == 2:
         repo_detail = 'RepoFile'
     config = FactorySimulator.create_repository_config(repo_detail)
-    repo = RepoFactory.create(repo_detail, config)
+    repo = FactoryRepository.create(repo_detail, config)
     
     # import pdb; pdb.set_trace()
     # Contruimos la request
@@ -44,7 +44,7 @@ def read():
     # Aplicamos el UseCase
     result = RoomRead.read(repo, req, domain)
 
-    serializer = SerializerFactory.create(domain)
+    serializer = FactorySerializer.create(domain)
     return Response(
         json.dumps(result.value, cls = serializer),
         mimetype = "application/json",

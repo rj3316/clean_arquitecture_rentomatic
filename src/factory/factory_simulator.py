@@ -1,9 +1,9 @@
-from .domain.simulator_room import room_dicts, rooms
-from .domain.simulator_hotel import hotel_dicts, hotels
-from .domain.simulator_converter import converter_dicts, converters
+from ..simulators.domain.simulator_room import room_dicts, rooms
+from ..simulators.domain.simulator_hotel import hotel_dicts, hotels
+from ..simulators.domain.simulator_converter import converter_dicts, converters
 
-from .infraestructure.simulator_file import file
-from .infraestructure.simulator_mysql import mysql
+from ..simulators.infraestructure.simulator_file import file
+from ..simulators.infraestructure.simulator_mysql import mysql
 
 class FactorySimulator:
     @classmethod

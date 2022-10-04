@@ -1,4 +1,5 @@
-from ...domain.domainfactory import DomainFactory
+
+from ...factory.factory_domain import FactoryDomain
 
 nif_1 = 'B12345678'
 name_1 = 'Hoteles Paco'
@@ -29,4 +30,4 @@ def hotels():
     domain = 'hotel'
     dicts = hotel_dicts()
 
-    return DomainFactory.create(domain, dicts)
+    return FactoryDomain.create(domain, dicts)

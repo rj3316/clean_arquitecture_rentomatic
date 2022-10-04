@@ -1,5 +1,5 @@
 from .repo import Repo
-from ..domain.domainfactory import DomainFactory
+from ..factory.factory_domain import FactoryDomain
 
 class RepoMem(Repo):
     def _configuration(self, config = None):
@@ -21,7 +21,7 @@ class RepoMem(Repo):
 
         try:
             domains = self.data
-            if domain in domains.keys(): ret_val = DomainFactory.create(domain, self.data[domain])
+            if domain in domains.keys(): ret_val = FactoryDomain.create(domain, self.data[domain])
         except: pass
                 
         return ret_val

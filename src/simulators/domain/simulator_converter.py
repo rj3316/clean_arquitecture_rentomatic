@@ -1,4 +1,4 @@
-from ...domain.domainfactory import DomainFactory
+from ...factory.factory_domain import FactoryDomain
 
 serial_1 = '001'
 host_1 = '192.168.1.10'
@@ -51,4 +51,4 @@ def converters():
     domain = 'converter'
     dicts = converter_dicts()
 
-    return DomainFactory.create(domain, dicts)
+    return FactoryDomain.create(domain, dicts)

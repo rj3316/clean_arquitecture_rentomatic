@@ -1,4 +1,4 @@
-from ...domain.domainfactory import DomainFactory
+from ...factory.factory_domain import FactoryDomain
 
 size_1 = 215
 price_1 = 39
@@ -60,4 +60,4 @@ def rooms():
     domain = 'room'
     dicts = room_dicts()
 
-    return DomainFactory.create(domain, dicts)
+    return FactoryDomain.create(domain, dicts)

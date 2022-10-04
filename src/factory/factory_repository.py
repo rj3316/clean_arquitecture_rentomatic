@@ -1,8 +1,9 @@
-from .repomem import RepoMem
-from .repofile import RepoFile
-from .reposql import RepoSql
+from .factory import Factory
+from ..repository.repomem import RepoMem
+from ..repository.repofile import RepoFile
+from ..repository.reposql import RepoSql
 
-class RepoFactory:
+class FactoryRepository(Factory):
     @classmethod
     def create(cls, repo = None, config = None):
         ret_val = None

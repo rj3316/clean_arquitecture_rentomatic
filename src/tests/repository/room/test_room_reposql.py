@@ -1,6 +1,6 @@
-from ....repository.repo_factory import RepoFactory
-from ....domain.domainfactory import DomainFactory
-from ....simulators.factorysimulator import FactorySimulator
+from ....factory.factory_repository import FactoryRepository
+from ....factory.factory_domain import FactoryDomain
+from ....factory.factory_simulator import FactorySimulator
 
 domain = 'room'
 repo_detail = 'RepoSql'
@@ -9,7 +9,7 @@ def test_room_reposql_read_without_filters():
     sims = FactorySimulator.create_domain_dicts(domain)
     
     config = FactorySimulator.create_repository_config(repo_detail)
-    repo = RepoFactory.create(repo_detail, config)
+    repo = FactoryRepository.create(repo_detail, config)
 
     repo.initialize(domain)
     
@@ -19,7 +19,7 @@ def test_room_reposql_read_without_filters():
     reals = repo.read(domain)
 
     # Creamos una lista con lo que esperamos que el MemRepo nos devuelva
-    expected = DomainFactory.create(domain, sims)
+    expected = FactoryDomain.create(domain, sims)
 
     assert reals == expected
 
@@ -30,7 +30,7 @@ def test_room_reposql_read_with_filters_price_gt_50():
     sims_filt = FactorySimulator.create_domain_dicts(domain, filters = filters)
     
     config = FactorySimulator.create_repository_config(repo_detail)
-    repo = RepoFactory.create(repo_detail, config)
+    repo = FactoryRepository.create(repo_detail, config)
 
     repo.initialize(domain)
     repo.write(domain, data = sims)
@@ -39,7 +39,7 @@ def test_room_reposql_read_with_filters_price_gt_50():
     reals = repo.read(domain, filters)
 
     # Creamos una lista con lo que esperamos que el MemRepo nos devuelva
-    expected = DomainFactory.create(domain, sims_filt)
+    expected = FactoryDomain.create(domain, sims_filt)
 
     assert reals == expected
 
@@ -51,7 +51,7 @@ def test_room_reposql_read_with_filters_size_lr_100():
     sims_filt = FactorySimulator.create_domain_dicts(domain, filters = filters)
     
     config = FactorySimulator.create_repository_config(repo_detail)
-    repo = RepoFactory.create(repo_detail, config)
+    repo = FactoryRepository.create(repo_detail, config)
 
     repo.initialize(domain)
     repo.write(domain, data = sims)
@@ -60,7 +60,7 @@ def test_room_reposql_read_with_filters_size_lr_100():
     reals = repo.read(domain, filters)
 
     # Creamos una lista con lo que esperamos que el MemRepo nos devuelva
-    expected = DomainFactory.create(domain, sims_filt)
+    expected = FactoryDomain.create(domain, sims_filt)
 
     assert reals == expected    
 
@@ -71,7 +71,7 @@ def test_room_reposql_read_with_filters_price_gt_50_and_price_lt_150():
     sims_filt = FactorySimulator.create_domain_dicts(domain, filters = filters)
     
     config = FactorySimulator.create_repository_config(repo_detail)
-    repo = RepoFactory.create(repo_detail, config)
+    repo = FactoryRepository.create(repo_detail, config)
 
     repo.initialize(domain)
     repo.write(domain, data = sims)
@@ -80,6 +80,6 @@ def test_room_reposql_read_with_filters_price_gt_50_and_price_lt_150():
     reals = repo.read(domain, filters)
 
     # Creamos una lista con lo que esperamos que el MemRepo nos devuelva
-    expected = DomainFactory.create(domain, sims_filt)
+    expected = FactoryDomain.create(domain, sims_filt)
 
     assert reals == expected        

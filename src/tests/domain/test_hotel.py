@@ -2,68 +2,56 @@ import uuid
 import json
 
 from ...domain.hotel import Hotel
-from ...domain.domainfactory import DomainFactory
-from ...serializers.factoryserializer import SerializerFactory
+from ...factory.factory_domain import FactoryDomain
+from ...factory.factory_serializer import FactorySerializer
+from ...factory.factory_simulator import FactorySimulator
 
 domain = 'hotel'
 
-code = uuid.uuid4()
-nif = 'B12345678'
-name = 'Hoteles Paco'
-rooms = 10
-
-init_dict = {
-    'code': code,
-    'nif': nif,
-    'name': name,
-    'rooms': rooms,
-}
+init_dict = FactorySimulator.create_domain_dicts(domain)[0]
+init_dict['code'] = uuid.uuid4()
 
 def test_hotel_model_init():
-    dom = Hotel(
-        code,
-        nif = nif,
-        name = name,
-        rooms = rooms,
-    )
+    dom = Hotel()
+    for key, value in init_dict.items():
+        setattr(dom, key, value)
 
-    assert dom.code == code
-    assert dom.nif == nif
-    assert dom.name == name
-    assert dom.rooms == rooms
+    for key, value in init_dict.items():
+        assert getattr(dom, key) == value
 
 def test_hotel_model_from_dict():
-    dom = DomainFactory.create(domain, init_dict)
+    dom = FactoryDomain.create(domain, init_dict)
 
-    assert dom.code == code
-    assert dom.nif == nif
-    assert dom.name == name
-    assert dom.rooms == rooms
+    for key, value in init_dict.items():
+        assert getattr(dom, key) == value
 
 def test_hotel_model_to_dict():
-    dom = DomainFactory.create(domain, init_dict)
+    dom = FactoryDomain.create(domain, init_dict)
 
     assert dom.to_dict() == init_dict
 
 def test_hotel_model_comparison():
-    hotel1 = DomainFactory.create(domain, init_dict)
-    hotel2 = DomainFactory.create(domain, init_dict)  
+    dom1 = FactoryDomain.create(domain, init_dict)
+    dom2 = FactoryDomain.create(domain, init_dict)
 
-    assert hotel1 == hotel2
+    assert dom1 == dom2
 
 def test_hotel_model_serializer():
-    dom = DomainFactory.create(domain, init_dict)
+    dom = FactoryDomain.create(domain, init_dict)
+    serializer = FactorySerializer.create(domain)
 
-    serializer = SerializerFactory.create(domain)
+    json_expected = f"{{\n"
+    for i, (key, value) in enumerate(init_dict.items()):
+        is_str = isinstance(value, str)
+        is_uuid = isinstance(value, uuid.UUID)
 
-    json_expected = f"""
-        {{
-            "code": "{code}",
-            "nif": "{nif}",
-            "name": "{name}",
-            "rooms": {rooms}
-        }}
-    """
+        json_expected += f"\"{key}\": "
+        if is_str or is_uuid: json_expected += "\""
+        json_expected += f"{value}"
+        if is_str or is_uuid: json_expected += "\""
+        if (i+1) < len(init_dict.keys()): json_expected += ','
+        json_expected += '\n'
+    json_expected += f"}}"
 
     json_dom = json.dumps(dom, cls = serializer)
 

@@ -11,6 +11,7 @@ class ConverterJsonEncoder(json.JSONEncoder):
                 "power": obj.power,
                 "soc": obj.soc,
             }
+
             return to_serialize
         except AttributeError:
             return super().default(obj)

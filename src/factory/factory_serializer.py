@@ -1,8 +1,8 @@
-from .room import RoomJsonEncoder
-from .hotel import HotelJsonEncoder
-from .converter import ConverterJsonEncoder
+from ..serializers.room import RoomJsonEncoder
+from ..serializers.hotel import HotelJsonEncoder
+from ..serializers.converter import ConverterJsonEncoder
 
-class SerializerFactory:
+class FactorySerializer:
     @classmethod
     def create(cls, domain = None):
         ret_val = None

@@ -1,6 +1,6 @@
-from ....repository.repo_factory import RepoFactory
-from ....domain.domainfactory import DomainFactory
-from ....simulators.factorysimulator import FactorySimulator
+from ....factory.factory_repository import FactoryRepository
+from ....factory.factory_domain import FactoryDomain
+from ....factory.factory_simulator import FactorySimulator
 
 domain = 'converter'
 repo_detail = 'RepoMem'
@@ -9,7 +9,7 @@ def test_converter_repomem_read_without_filters():
     sims = FactorySimulator.create_domain_dicts(domain)
     
     config = FactorySimulator.create_repository_config(repo_detail)
-    repo = RepoFactory.create(repo_detail, config)
+    repo = FactoryRepository.create(repo_detail, config)
 
     repo.initialize(domain)
     
@@ -19,7 +19,7 @@ def test_converter_repomem_read_without_filters():
     reals = repo.read(domain)
 
     # Creamos una lista con lo que esperamos que el MemRepo nos devuelva
-    expected = DomainFactory.create(domain, sims)
+    expected = FactoryDomain.create(domain, sims)
 
     assert reals == expected
 
@@ -30,7 +30,7 @@ def test_converter_repomem_read_with_filters_rated_lt_25():
     sims_filt = FactorySimulator.create_domain_dicts(domain, filters = filters)
     
     config = FactorySimulator.create_repository_config(repo_detail)
-    repo = RepoFactory.create(repo_detail, config)
+    repo = FactoryRepository.create(repo_detail, config)
 
     repo.initialize(domain)
     repo.write(domain, data = sims)
@@ -39,6 +39,6 @@ def test_converter_repomem_read_with_filters_rated_lt_25():
     reals = repo.read(domain, filters)
 
     # Creamos una lista con lo que esperamos que el MemRepo nos devuelva
-    expected = DomainFactory.create(domain, sims_filt)
+    expected = FactoryDomain.create(domain, sims_filt)
 
     assert reals == expected

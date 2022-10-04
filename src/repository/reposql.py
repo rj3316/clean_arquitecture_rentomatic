@@ -2,7 +2,7 @@ from telnetlib import DO
 from .repo import Repo
 from ..infraestructure.ControllerMySql import ControllerMySql
 from ..adapters.AdapterMySql import AdapterMySql
-from ..domain.domainfactory import DomainFactory
+from ..factory.factory_domain import FactoryDomain
 
 class RepoSql(Repo):
     def _configuration(self, config = None):
@@ -28,7 +28,7 @@ class RepoSql(Repo):
             data = ControllerMySql.read(self.ddbb_config, domain)
             data = AdapterMySql.adapt_domain_from_sql(data)
 
-            ret_val = DomainFactory.create(domain, data)
+            ret_val = FactoryDomain.create(domain, data)
         except: pass
         
         return ret_val

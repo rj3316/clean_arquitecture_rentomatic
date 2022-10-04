@@ -1,7 +1,7 @@
 from ..legacy.MySql import MySql
 from .Controller import Controller
 
-from ..domain.domainfactory import DomainFactory
+from ..factory.factory_domain import FactoryDomain
 
 class ControllerMySql(Controller):
     @classmethod
@@ -70,7 +70,7 @@ class ControllerMySql(Controller):
 
     @classmethod
     def _create_domain_table(cls, ddbb_config, domain):
-        dom = DomainFactory.create(domain)
+        dom = FactoryDomain.create(domain)
         fields = dom.describe()
 
         config = cls._get_ddbb_config(ddbb_config)

@@ -1,9 +1,9 @@
-from src.repository.repo_factory import RepoFactory
+from src.factory.factory_repository import RepoFactory
 from src.use_cases.read import Read
 
-from src.domain.domainfactory import DomainFactory
+from src.factory.factory_domain import DomainFactory
 from src.requests.builder_read_request import BuilderReadRequest
-from src.simulators.factorysimulator import FactorySimulator
+from src.factory.factory_simulator import FactorySimulator
 
 # from src.simulators.domain.simulator_room import room_dicts
 # from src.simulators.domain.simulator_hotel import hotel_dicts
