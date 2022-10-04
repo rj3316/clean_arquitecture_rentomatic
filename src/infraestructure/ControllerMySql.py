@@ -87,7 +87,7 @@ class ControllerMySql(Controller):
             elif field[1] == 'int':
                 datatype = 'INT'
             elif field[1] == 'float':
-                datatype = 'FLOAT'
+                datatype = 'REAL'
             elif field[1] == 'date':
                 datatype = 'DATE'
 

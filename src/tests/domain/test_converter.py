@@ -10,6 +10,7 @@ domain = 'converter'
 
 init_dict = FactorySimulator.create_domain_dicts(domain)[0]
 init_dict['code'] = uuid.uuid4()
+
 def test_converter_model_init():
     dom = Converter(
         code = init_dict['code'],
