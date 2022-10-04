@@ -2,7 +2,7 @@ from unittest import mock
 
 from ....responses import ResponseTypes
 
-from ....use_cases.converter_read import ConverterRead
+from ....use_cases.read import Read
 from ....requests.builder_converter_read_request import BuilderConverterReadRequest
 from ....factory.factory_simulator import FactorySimulator
 
@@ -14,7 +14,7 @@ def test_converter_read_without_parameters():
 
     request = BuilderConverterReadRequest.build_read_request()
 
-    response = ConverterRead.read(repo, request, domain)
+    response = Read.read(repo, request, domain)
 
     # Verifimos que la respuesta del request es True
     assert bool(response) == True
@@ -29,7 +29,7 @@ def test_converter_read_with_filters():
     query_filters = {'code__eq': 5}
     request = BuilderConverterReadRequest.build_read_request(filters = query_filters)
 
-    response = ConverterRead.read(repo, request, domain)
+    response = Read.read(repo, request, domain)
 
     assert bool(response) is True
     assert response.value == FactorySimulator.create_domain_objects(domain)
@@ -41,7 +41,7 @@ def test_converter_read_handles_generic_error():
     query_filters = {}
     request = BuilderConverterReadRequest.build_read_request(filters = query_filters)
 
-    response = ConverterRead.read(repo, request, domain)
+    response = Read.read(repo, request, domain)
 
     assert bool(response) is False
     assert response.value == {
@@ -55,7 +55,7 @@ def test_converter_read_handles_bad_request():
     query_filters = 5
     request = BuilderConverterReadRequest.build_read_request(filters = query_filters)
 
-    response = ConverterRead.read(repo, request, domain)
+    response = Read.read(repo, request, domain)
 
     assert bool(response) is False
     assert response.value == {

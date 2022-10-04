@@ -1,12 +1,11 @@
 import json
 from flask import Blueprint, Response, request
 
-from ....use_cases.room_read import RoomRead
+from ....use_cases.read import Read
 
 from ....factory.factory_repository import FactoryRepository
 from ....factory.factory_serializer import FactorySerializer
-from ....factory.factory_builder import FactoryBuilder
-from ....requests.builder_room_read_request import BuilderRoomReadRequest
+from ....factory.factory_request_builder import FactoryRequestBuilder
 
 from ....factory.factory_simulator import FactorySimulator
 
@@ -39,10 +38,10 @@ def read():
     for arg, value in request.args.items():
         if arg.startswith('filter_'): query_request['filters'][arg.replace('filter_', '')] = value
 
-    req = BuilderRoomReadRequest.build_room_read_request(query_request['filters'])
+    req = FactoryRequestBuilder.create(domain).build_read_request(query_request['filters'])
 
     # Aplicamos el UseCase
-    result = RoomRead.read(repo, req, domain)
+    result = Read.read(repo, req, domain)
 
     serializer = FactorySerializer.create(domain)
     return Response(

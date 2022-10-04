@@ -1,8 +1,8 @@
 import json
 from flask import Blueprint, Response, request
 
-from ....use_cases.hotel_read import HotelRead
-from ....requests.builder_hotel_read_request import BuilderHotelReadRequest
+from ....use_cases.read import Read
+from ....factory.factory_request_builder import FactoryRequestBuilder
 from ....factory.factory_repository import FactoryRepository
 from ....factory.factory_serializer import FactorySerializer
 
@@ -37,10 +37,10 @@ def read():
     for arg, value in request.args.items():
         if arg.startswith('filter_'): query_request['filters'][arg.replace('filter_', '')] = value
 
-    req = BuilderHotelReadRequest.build_read_request(query_request['filters'])
+    req = FactoryRequestBuilder.create(domain).build_read_request(query_request['filters'])
 
     # Aplicamos el UseCase
-    result = HotelRead.read(repo, req, domain)
+    result = Read.read(repo, req, domain)
 
     serializer = FactorySerializer.create(domain)
     return Response(

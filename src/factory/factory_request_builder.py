@@ -3,7 +3,7 @@ from ..requests.builder_room_read_request import BuilderRoomReadRequest
 from ..requests.builder_hotel_read_request import BuilderHotelReadRequest
 from ..requests.builder_converter_read_request import BuilderConverterReadRequest
 
-class FactoryBuilder(Factory):
+class FactoryRequestBuilder(Factory):
     @classmethod
     def create(cls, domain = None):
         ret_val = None

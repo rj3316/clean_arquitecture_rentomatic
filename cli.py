@@ -1,7 +1,7 @@
-from src.factory.factory_repository import RepoFactory
+from src.factory.factory_repository import FactoryRepository
 from src.use_cases.read import Read
 
-from src.factory.factory_domain import DomainFactory
+from src.factory.factory_domain import FactoryDomain
 from src.requests.builder_read_request import BuilderReadRequest
 from src.factory.factory_simulator import FactorySimulator
 
@@ -24,7 +24,7 @@ elif domain_selector == 1:
     domain = 'hotel'
 
 sims = FactorySimulator.create_domain_dicts(domain)
-domains = DomainFactory.create(domain, sims)
+domains = FactoryDomain.create(domain, sims)
 
 # Repo selector:
 #   0. RAM
@@ -52,7 +52,7 @@ elif filter_selector == 2:
     filters = {'filter_size__lt': 150}
 
 config = FactorySimulator.create_repository_config(repo_detail)
-repo   = RepoFactory.create(repo_detail, config)
+repo   = FactoryRepository.create(repo_detail, config)
 
 # Contruimos la request
 query_request = {
@@ -65,13 +65,13 @@ if filters is not None:
 
 req = BuilderReadRequest.build_read_request(query_request['filters'])
 
-result = Read.read(repo, req, domain)
+result = Read(repo, req, domain)
 print(result.value)
 
 # Insertamos entidades de prueba
 repo.write(domain = domain, data = sims)
 
-result = Read.read(repo, req, domain)
+result = Read(repo, req, domain)
 print(result.value)
 
 if testing: repo.initialize(domain)

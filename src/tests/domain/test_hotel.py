@@ -1,3 +1,5 @@
+import pytest
+
 import uuid
 import json
 
@@ -11,6 +13,7 @@ domain = 'hotel'
 init_dict = FactorySimulator.create_domain_dicts(domain)[0]
 init_dict['code'] = uuid.uuid4()
 
+@pytest.mark.repository
 def test_hotel_model_init():
     dom = Hotel()
     for key, value in init_dict.items():
