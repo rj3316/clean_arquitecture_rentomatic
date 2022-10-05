@@ -1,10 +1,12 @@
-from ....factory.factory_repository import FactoryRepository
+import pytest
 from ....factory.factory_domain import FactoryDomain
 from ....factory.factory_simulator import FactorySimulator
+from ....factory.factory_repository import FactoryRepository
 
 domain = 'converter'
 repo_detail = 'RepoSql'
 
+@pytest.mark.repository
 def test_converter_reposql_read_without_filters():
     sims = FactorySimulator.create_domain_dicts(domain)
     
@@ -23,6 +25,7 @@ def test_converter_reposql_read_without_filters():
 
     assert reals == expected
 
+@pytest.mark.repository
 def test_converter_reposql_read_with_filters_rated_lt_25():
     filters = {'rated__lt': 25}
 

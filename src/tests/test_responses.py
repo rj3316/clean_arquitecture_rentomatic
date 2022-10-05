@@ -1,3 +1,5 @@
+import pytest
+
 from ..responses import ResponseSuccess, ResponseFailure, ResponseTypes, build_response_from_invalid_request
 from ..requests.builder_read_request import ReadInvalidRequest
 
@@ -5,10 +7,12 @@ SUCCESS_VALUE = {'key': ['value1', 'value2']}
 GENERIC_RESPONSE_TYPE = 'Response'
 GENERIC_RESPONSE_MESSAGE = 'This is a response'
 
+@pytest.mark.response
 def test_reponse_success_is_true():
     response = ResponseSuccess(SUCCESS_VALUE)
     assert bool(response) is True
 
+@pytest.mark.response
 def test_response_failure_is_false():
     response = ResponseFailure(
         GENERIC_RESPONSE_TYPE, GENERIC_RESPONSE_MESSAGE
@@ -16,6 +20,7 @@ def test_response_failure_is_false():
 
     assert bool(response) is False
 
+@pytest.mark.response
 def test_response_success_has_type_and_value():
     response = ResponseSuccess(SUCCESS_VALUE)
 
@@ -23,6 +28,7 @@ def test_response_success_has_type_and_value():
     assert response.value == SUCCESS_VALUE
     
 
+@pytest.mark.response
 def test_response_failure_has_type_and_message():
     response = ResponseFailure(
         GENERIC_RESPONSE_TYPE, GENERIC_RESPONSE_MESSAGE
@@ -35,6 +41,7 @@ def test_response_failure_has_type_and_message():
         'message': GENERIC_RESPONSE_MESSAGE
     }
 
+@pytest.mark.response
 def test_response_failure_initialization_with_exception():
     response = ResponseFailure(
         GENERIC_RESPONSE_TYPE, Exception("Just an error message")
@@ -44,12 +51,14 @@ def test_response_failure_initialization_with_exception():
     assert response.type == GENERIC_RESPONSE_TYPE
     assert response.message == "Exception: Just an error message"
 
+@pytest.mark.response
 def test_response_failure_from_empty_invalid_request():
     response = build_response_from_invalid_request(ReadInvalidRequest())
     
     assert bool(response) is False
     assert response.type == ResponseTypes.PARAMETERS_ERROR
 
+@pytest.mark.response
 def test_response_failure_from_invalid_request_with_errors():
     request = ReadInvalidRequest()
     request.add_error('path', "Is mandatory")    

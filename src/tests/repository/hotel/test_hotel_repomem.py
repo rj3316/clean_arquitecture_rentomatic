@@ -1,3 +1,4 @@
+import pytest
 from ....factory.factory_repository import FactoryRepository
 from ....factory.factory_domain import FactoryDomain
 from ....factory.factory_simulator import FactorySimulator
@@ -5,6 +6,7 @@ from ....factory.factory_simulator import FactorySimulator
 domain = 'hotel'
 repo_detail = 'RepoMem'
 
+@pytest.mark.repository
 def test_hotel_repomem_read_without_filters():
     sims = FactorySimulator.create_domain_dicts(domain)
     
@@ -24,6 +26,7 @@ def test_hotel_repomem_read_without_filters():
 
     assert reals == expected
 
+@pytest.mark.repository
 def test_hotel_repomem_read_with_filters_rooms_lt_12():
     filters = {'rooms__lt': 12}
 

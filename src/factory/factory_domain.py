@@ -5,19 +5,17 @@ from ..domain.converter import Converter
 class FactoryDomain:
     @classmethod
     def create(cls, domain = None, config = None):
+        is_list = isinstance(config, list)
+        is_dict = isinstance(config, dict)
+        is_none = config is None
+        is_valid = is_list or is_dict or is_none
+
         ret_val = None
 
-        if domain is not None:
-            is_dict = False
-            is_none = False
-
-            if isinstance(config, dict): is_dict = True
-            if config is None          : is_none = True
-
-            if not isinstance(config, list): config = [config]
-
+        if is_valid and (domain is not None):
+            if not is_list: config = [config]
             ret_val =  [cls._create(domain, i) for i in config]
-            if is_dict or is_none: ret_val = ret_val[0]
+            if not is_list: ret_val = ret_val[0]
         return ret_val
 
     @classmethod

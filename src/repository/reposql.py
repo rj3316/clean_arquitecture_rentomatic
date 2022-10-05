@@ -1,4 +1,3 @@
-from telnetlib import DO
 from .repo import Repo
 from ..infraestructure.ControllerMySql import ControllerMySql
 from ..adapters.AdapterMySql import AdapterMySql

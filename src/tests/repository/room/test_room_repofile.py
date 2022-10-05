@@ -1,3 +1,4 @@
+import pytest
 from ....factory.factory_simulator import FactorySimulator
 from ....factory.factory_repository import FactoryRepository
 from ....factory.factory_domain import FactoryDomain
@@ -5,6 +6,7 @@ from ....factory.factory_domain import FactoryDomain
 domain = 'room'
 repo_detail = 'RepoFile'
 
+@pytest.mark.repository
 def test_room_repofile_read_without_filters():
     sims = FactorySimulator.create_domain_dicts(domain)
     
@@ -23,6 +25,7 @@ def test_room_repofile_read_without_filters():
 
     assert reals == expected
 
+@pytest.mark.repository
 def test_room_repofile_read_with_filters_price_gt_50():
     filters = {'price__gt': 50}
 
@@ -43,6 +46,7 @@ def test_room_repofile_read_with_filters_price_gt_50():
 
     assert reals == expected
 
+@pytest.mark.repository
 def test_room_repofile_read_with_filters_size_lr_100():
     filters = {'size__lr': 100}
 
@@ -63,6 +67,7 @@ def test_room_repofile_read_with_filters_size_lr_100():
 
     assert reals == expected
 
+@pytest.mark.repository
 def test_room_repofile_read_with_filters_price_gt_50_and_price_lt_150():
     filters = {'price__gt': 50, 'price__lt': 150}
 
